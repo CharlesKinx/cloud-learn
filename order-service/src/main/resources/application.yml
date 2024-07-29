@@ -1,0 +1,37 @@
+server:
+  port: 8081
+spring:
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/cloud_order?useSSL=false
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+  application:
+    name: order-service # eureka的服务名称
+app:
+  id: apollo-test
+apollo:
+  meta: http://localhost:8080
+  bootstrap:
+    enable: true
+
+logging:
+  level:
+    com.example: debug
+  pattern:
+    dateformat: MM-dd HH:mm:ss:SSS
+
+eureka:
+  client:
+    service-url:  # eureka的地址信息
+      defaultZone: http://127.0.0.1:8006/eureka
+
+# 使用配置的方式来进行配置负载均衡
+#user-service:
+#  ribbon:
+#    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
+ribbon:
+  eager-load:
+    # 为哪些微服务客户端开启饥饿加载，不在这里面的依然使用懒加载，多个使用, 分割
+    clients: user-service
+    enabled: true # 开启饥饿加载
